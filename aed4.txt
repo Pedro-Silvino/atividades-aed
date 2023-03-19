@@ -1,0 +1,92 @@
+using System;
+
+class Program {
+    static void Main(string[] args) {
+        double a, b, c;
+        do {
+            Console.Write("Digite o valor de A: ");
+            a = double.Parse(Console.ReadLine());
+            if (a <= 0) {
+                Console.WriteLine("Valor inválido! O valor de A deve ser maior que zero.");
+            }
+        } while (a <= 0);
+
+        do {
+            Console.Write("Digite o valor de B: ");
+            b = double.Parse(Console.ReadLine());
+            if (b <= 0) {
+                Console.WriteLine("Valor inválido! O valor de B deve ser maior que zero.");
+            }
+        } while (b <= 0);
+
+        do {
+            Console.Write("Digite o valor de C: ");
+            c = double.Parse(Console.ReadLine());
+            if (c <= 0) {
+                Console.WriteLine("Valor inválido! O valor de C deve ser maior que zero.");
+            }
+        } while (c <= 0);
+
+        Triangulo triangulo = new Triangulo(a, b, c);
+
+        Console.WriteLine(triangulo.Classificacao());
+    }
+}
+
+class Triangulo {
+    private double a, b, c;
+
+    public Triangulo(double a, double b, double c) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+    }
+
+    private double MaiorLado() {
+        if (a > b && a > c) {
+            return a;
+        }
+        else if (b > c) {
+            return b;
+        }
+        else {
+            return c;
+        }
+    }
+
+    private bool VerificaExistencia() {
+        if (a >= b + c || b >= a + c || c >= a + b) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    public string Classificacao() {
+        string mensagem = "";
+
+        if (VerificaExistencia()) {
+            if (a * a == b * b + c * c || b * b == a * a + c * c || c * c == a * a + b * b) {
+                mensagem += "TRIANGULO RETANGULO\n";
+            }
+            if (a * a > b * b + c * c || b * b > a * a + c * c || c * c > a * a + b * b) {
+                mensagem += "TRIANGULO OBTUSANGULO\n";
+            }
+            if (a * a < b * b + c * c && b * b < a * a + c * c && c * c < a * a + b * b) {
+                mensagem += "TRIANGULO ACUTANGULO\n";
+            }
+            if (a == b && b == c) {
+                mensagem += "TRIANGULO EQUILATERO\n";
+            }
+            else if (a == b || a == c || b == c) {
+                mensagem += "TRIANGULO ISOSCELES\n";
+            }
+        }
+        else {
+            mensagem = "NAO FORMA TRIANGULO";
+        }
+
+        return mensagem;
+    }
+}
